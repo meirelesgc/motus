@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextTextPassword2);
     }
 
-    public void goToMotus(View view) {
+    public void validateLogin(View view) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -36,10 +37,14 @@ public class LoginActivity extends AppCompatActivity {
         String savedPassword = sharedPreferences.getString("password", "");
 
         if (email.equals(savedEmail) && password.equals(savedPassword)) {
-            Intent intent = new Intent(this, MotusActivity.class);
-            startActivity(intent);
+            goToMotus();
         } else {
             Toast.makeText(this, "Credenciais incorretas. Tente novamente.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void goToMotus() {
+        Intent intent = new Intent(this, MotusActivity.class);
+        startActivity(intent);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -24,11 +25,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextTextEmailAddress);
         editTextPassword = findViewById(R.id.editTextTextPassword);
         editTextRePassword = findViewById(R.id.editTextReTextPassword);
-    }
-
-    public void goToLogin(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 
     public void createAccount(View view) {
@@ -56,6 +52,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         editor.apply();
 
         Toast.makeText(this, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show();
-        goToLogin(view);
+        finish();
     }
 }

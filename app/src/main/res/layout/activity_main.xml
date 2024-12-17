@@ -28,11 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
+        android:onClick="goToCreateAccount"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toStartOf="@+id/buttonLogin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="goToCreateAccount"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
@@ -40,10 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
+        android:onClick="goToLogin"
         android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonCreateAccount"
-        android:onClick="goToLogin"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

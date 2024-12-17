@@ -1,14 +1,26 @@
 <resources>
+    <!-- App Information -->
     <string name="app_name">Motus</string>
     <string name="main_hello">Bem-vindo ao Motus! O seu aliado na hora de gerenciar agendamentos e otimizar a sua rotina.</string>
+
+    <!-- Authentication -->
     <string name="sign_in">Acessar</string>
     <string name="sign_up">Criar conta</string>
     <string name="sign_up_orient">para continuar e acessar a plataforma</string>
+    <string name="login">Faça login</string>
+    <string name="sign_in_orient">para continuar e acessar a plataforma</string>
+
+    <!-- Input Hints -->
     <string name="hint_password">Digite sua senha</string>
     <string name="hint_re_password">Digite novamente sua senha</string>
     <string name="hint_email">Digite seu e-mail</string>
     <string name="hint_phone">Digite seu telefone</string>
 
-    <string name="login">Faça login</string>
-    <string name="sign_in_orient">para continuar e acessar a plataforma</string>
+    <!-- Sensor Data -->
+    <string name="accelerometer_text">Accelerometer: %.2f, %.2f, %.2f</string>
+    <string name="gravity_text">Gravity: %.2f, %.2f, %.2f</string>
+    <string name="gyroscope_text">Gyroscope: %.2f, %.2f, %.2f</string>
+    <string name="linear_acceleration_text">Linear Acceleration: %.2f, %.2f, %.2f</string>
+    <string name="rotation_vector_text">Rotation Vector: %.2f, %.2f, %.2f</string>
+    <string name="step_counter_text">Step Counter: %d</string>
 </resources>
