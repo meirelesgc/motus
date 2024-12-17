@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Motus</string>
+    <string name="main_hello">Bem-vindo ao Motus! O seu aliado na hora de gerenciar agendamentos e otimizar a sua rotina.</string>
+    <string name="sign_in">Acessar</string>
+    <string name="sign_up">Criar conta</string>
+    <string name="sign_up_orient">para continuar e acessar a plataforma</string>
+    <string name="hint_password">Digite sua senha</string>
+    <string name="hint_re_password">Digite novamente sua senha</string>
+    <string name="hint_email">Digite seu e-mail</string>
+    <string name="hint_phone">Digite seu telefone</string>
+
+    <string name="login">Faça login</string>
+    <string name="sign_in_orient">para continuar e acessar a plataforma</string>
+</resources>
