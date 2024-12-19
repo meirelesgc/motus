@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import br.com.motus.models.User;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
@@ -32,11 +34,19 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Carregar os dados do usuário salvos
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        String savedPhone = sharedPreferences.getString("phone", "");
         String savedEmail = sharedPreferences.getString("email", "");
         String savedPassword = sharedPreferences.getString("password", "");
 
-        if (email.equals(savedEmail) && password.equals(savedPassword)) {
+        // Criar uma instância do usuário salvo
+        User usuarioSalvo = new User(savedPhone, savedEmail, savedPassword);
+
+        // Validar as credenciais
+        User usuarioAtual = new User("", email, password);
+        if (usuarioAtual.getEmail().equals(usuarioSalvo.getEmail()) &&
+                usuarioAtual.getPassword().equals(usuarioSalvo.getPassword())) {
             goToMotus();
         } else {
             Toast.makeText(this, "Credenciais incorretas. Tente novamente.", Toast.LENGTH_SHORT).show();

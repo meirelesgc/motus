@@ -1,6 +1,5 @@
 package br.com.motus;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import br.com.motus.models.User;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -33,25 +34,40 @@ public class CreateAccountActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String rePassword = editTextRePassword.getText().toString().trim();
 
-        if (phone.isEmpty() || email.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
-            Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show();
+        if (!password.equals(rePassword)) {
+            Toast.makeText(this, "As senhas não coincidem.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!password.equals(rePassword)) {
-            Toast.makeText(this, "As senhas não coincidem.", Toast.LENGTH_SHORT).show();
+        User user = new User(phone, email, password);
+
+        // Validar dados
+        if (!user.isValid()) {
+            StringBuilder errorMessage = new StringBuilder("Erros encontrados:");
+            if (!user.isValidPhone()) {
+                errorMessage.append("\n- Telefone inválido.");
+            }
+            if (!user.isValidEmail()) {
+                errorMessage.append("\n- E-mail inválido.");
+            }
+            if (!user.isValidPassword()) {
+                errorMessage.append("\n- Senha deve ter pelo menos 6 caracteres.");
+            }
+
+            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
             return;
         }
 
         // Persistir dados utilizando SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("phone", phone);
-        editor.putString("email", email);
-        editor.putString("password", password);
+        editor.putString("phone", user.getPhone());
+        editor.putString("email", user.getEmail());
+        editor.putString("password", user.getPassword());
         editor.apply();
 
         Toast.makeText(this, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 }
