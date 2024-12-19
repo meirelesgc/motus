@@ -7,8 +7,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +19,9 @@ public class MotusActivity extends AppCompatActivity implements SensorEventListe
 
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
+    private Sensor gravitySensor;
     private ImageView arrowImageView;
-    private static final float THRESHOLD = 0.4f;
+    private static final float FALL_THRESHOLD = 15.0f;  // Valor indicativo de queda
     private float filteredAccX = 0, filteredAccY = 0;
     private static final float SMOOTHING_FACTOR = 0.1f;  // Quanto menor, mais suave
 
@@ -28,6 +32,7 @@ public class MotusActivity extends AppCompatActivity implements SensorEventListe
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         linearAccelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         arrowImageView = findViewById(R.id.arrowImageView);
     }
 
@@ -36,6 +41,9 @@ public class MotusActivity extends AppCompatActivity implements SensorEventListe
         super.onResume();
         if (linearAccelerationSensor != null) {
             sensorManager.registerListener(this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_UI);
+        }
+        if (gravitySensor != null) {
+            sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
@@ -47,21 +55,40 @@ public class MotusActivity extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-            float accelerationX = event.values[0];
-            float accelerationY = event.values[1];
+        if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
+            float[] gravityValues = event.values.clone();
+        } else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            detectMovement(event);
+        }
+    }
 
-            if (Math.abs(accelerationX) < THRESHOLD && Math.abs(accelerationY) < THRESHOLD) {
-                return;
-            }
+    private void detectMovement(SensorEvent event) {
+        float accelerationX = event.values[0];
+        float accelerationY = event.values[1];
+        float accelerationZ = event.values[2];
 
-            filteredAccX = filteredAccX + SMOOTHING_FACTOR * (accelerationX - filteredAccX);
-            filteredAccY = filteredAccY + SMOOTHING_FACTOR * (accelerationY - filteredAccY);
+        filteredAccX = filteredAccX + SMOOTHING_FACTOR * (accelerationX - filteredAccX);
+        filteredAccY = filteredAccY + SMOOTHING_FACTOR * (accelerationY - filteredAccY);
 
+        float totalAcceleration = (float) Math.sqrt(
+                accelerationX * accelerationX +
+                        accelerationY * accelerationY +
+                        accelerationZ * accelerationZ);
+
+        if (totalAcceleration > FALL_THRESHOLD) {
+            handleFallDetected();
+        } else {
             float angle = (float) Math.toDegrees(Math.atan2(filteredAccY, filteredAccX));
-
             arrowImageView.setRotation(angle);
         }
+    }
+
+    private void handleFallDetected() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+        Toast.makeText(this, "Queda detectada!", Toast.LENGTH_LONG).show();
     }
 
     @Override
