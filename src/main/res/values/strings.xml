@@ -1,0 +1,36 @@
+<resources>
+    <!-- Nome do aplicativo -->
+    <string name="app_name">motus</string>
+
+    <!-- Placeholder genérico para campos de texto (se necessário) -->
+    <string name="app.placeholder">[…]</string>
+
+    <!-- Seção de Login -->
+    <string name="login.Title">Welcome to Motus!</string>
+    <string name="login.ForgotQuestion">Forgot your password?</string>
+    <string name="login.signUp">Sign Up</string>
+    <string name="login.loginButton">Login</string>
+
+    <!-- Dicas para os campos de login -->
+    <string name="login.hint.email">E-mail</string>
+    <string name="login.hint.password">Password</string>
+
+    <!-- Seção de Criação de Conta -->
+    <string name="createAccount.Title">Create Account</string>
+    <string name="createAccount.createButton">Submit</string>
+
+    <!-- Dicas para os campos de criação de conta -->
+    <string name="createAccount.hint.Name">Name</string>
+    <string name="createAccount.hint.email">E-mail</string>
+    <string name="createAccount.hint.phone">Phone</string>
+    <string name="createAccount.hint.password">Password</string>
+    <string name="createAccount.hint.passwordAgain">Password Again</string>
+
+    <!-- Sensor Data -->
+    <string name="accelerometer_text">Accelerometer: %.2f, %.2f, %.2f</string>
+    <string name="gravity_text">Gravity: %.2f, %.2f, %.2f</string>
+    <string name="gyroscope_text">Gyroscope: %.2f, %.2f, %.2f</string>
+    <string name="linear_acceleration_text">Linear Acceleration: %.2f, %.2f, %.2f</string>
+    <string name="rotation_vector_text">Rotation Vector: %.2f, %.2f, %.2f</string>
+    <string name="step_counter_text">Step Counter: %d</string>
+</resources>
